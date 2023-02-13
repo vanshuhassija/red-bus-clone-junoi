@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import toast from "react-hot-toast";
 import { BsArrowLeftRight } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [journeyDate, setJourneyDate] = useState("");
+  const navigate=useNavigate();
+
   function interchangeFromTo() {
     const startPoint = from;
     const endPoint = to;
     setFrom(endPoint);
     setTo(startPoint);
   }
+
+  function searchBuses(){
+    if(!from||!to||!journeyDate){
+      toast.error("All fields are required")
+    }
+    else{
+      navigate("/results")
+    }
+  }
+
   return (
     <Container>
       <div className="m-5 ">
@@ -33,11 +48,15 @@ const Search = () => {
             }}
           />
           <Form.Control
+            value={journeyDate}
             placeholder="Date"
             type="date"
+            onChange={(e) => {
+              setJourneyDate(e.target.value);
+            }}
             aria-label="Text input with dropdown button"
           />
-          <Button variant="danger">Search Buses</Button>
+          <Button variant="danger" onClick={searchBuses}>Search Buses</Button>
         </InputGroup>
       </div>
     </Container>
