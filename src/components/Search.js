@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import JourneyContext from "../context/JourneyContext";
 
 const Search = () => {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  
   const [journeyDate, setJourneyDate] = useState("");
   const navigate=useNavigate();
+  const {from,to,setFrom,setTo}=useContext(JourneyContext);
 
   function interchangeFromTo() {
     const startPoint = from;
