@@ -8,18 +8,12 @@ const SearchResults = () => {
   const [buses, setBuses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { from, to } = useContext(JourneyContext);
-  const navigate=useNavigate()
-
-  useEffect(()=>{
-    if(!from||!to){
-        navigate("/")
-    }
-  },[])
+ 
 
   async function fetchBuses() {
     setIsLoading(true);
     const response = await fetch(
-      `https://content.newtonschool.co/v1/pr/63b70222af4f30335b4b3b9a/buses`
+      `https://content.newtonschool.co/v1/pr/63b70222af4f30335b4b3b9a/buses?source=${from}&destination=${to}`
     );
     const allBuses = await response.json();
     setIsLoading(false);
@@ -34,14 +28,13 @@ const SearchResults = () => {
     if(criteria==="Price"){
         const busesCopy=[...buses]
         const sortedBuses=busesCopy.sort((a,b)=>{
-            if(Number(a.ticketPrice)<Number(b.ticketPrice)){
+            if(a.ticketPrice<b.ticketPrice){
                 return -1
             }
-           
+        
                 return 1
             
         })
-        console.log("Sorted Buses are",sortedBuses)
         setBuses(sortedBuses)
     }
   }

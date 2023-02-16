@@ -8,6 +8,9 @@ import SearchResults from "./components/SearchResults";
 import Home from "./components/Home";
 import { useState } from "react";
 import JourneyContext from "./context/JourneyContext";
+import SeatSelection from "./components/SeatSelection";
+import Journey from "./components/Journey";
+import Login from "./components/Login";
 
 function App() {
   const [from, setFrom] = useState("");
@@ -23,14 +26,14 @@ function App() {
         }}
       >
         <BrowserRouter>
-          <Toaster />
-          <RedBusNavbar />
-          <Search />
+        
           {/* Show these three things everywhere but after this the content should be shown according to the routes */}
 
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/results" element={<SearchResults />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Journey Component={Home} />} />
+            <Route path="/results" element={<Journey Component={SearchResults}/>} />
+            <Route path="/book-seats" element={<Journey Component={SeatSelection} />} />
           </Routes>
         </BrowserRouter>
       </JourneyContext.Provider>
